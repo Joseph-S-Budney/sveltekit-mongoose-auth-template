@@ -3,7 +3,10 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			user: import("lucia").User | null;
+			session: import("lucia").user | null;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
