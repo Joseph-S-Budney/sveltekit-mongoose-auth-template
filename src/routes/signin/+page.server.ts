@@ -43,7 +43,6 @@ export const actions: Actions = {
             path: ".",
             ...sessionCookie.attributes
         });
-        console.log("redirecting")
         redirect(302, "/")
     }
 }
