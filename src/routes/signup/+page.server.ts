@@ -28,8 +28,11 @@ export const actions: Actions = {
         }
         const userId = generateId(15);
         const hashedPassword = await new Argon2id().hash(password);
-
-        //TODO: check if username is already used
+        if (await(User.exists({username: username})) != null ){
+            return fail(400, {
+                message: "username is not unique"
+            })
+        }
         User.create({
             _id: userId,
             username: username,
