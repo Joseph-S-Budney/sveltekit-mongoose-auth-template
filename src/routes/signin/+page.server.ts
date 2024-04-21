@@ -10,6 +10,8 @@ export const actions: Actions = {
         const formData = await event.request.formData();
         const username = formData.get("username");
         const password = formData.get("password");
+
+        // validates form data
         if (
             typeof username !== "string" ||
             username.length < 3 ||
@@ -25,18 +27,24 @@ export const actions: Actions = {
                 message: "Invalid password"
             });
         }
+
+        // checks if user is in db
         const existingUser = await User.findOne({username: username});
         if(!existingUser){
             return fail(400, {
                 message: "Incorrect username or password"
             });           
         }
+
+        // checks hashed password
         const validPassword = await new Argon2id().verify(existingUser.get('hashed_password'), password);
         if (!validPassword){
             return fail(400, {
                 message: "Incorrect username or password"
             });
         }
+
+        // creates session and cookie
         const session = await lucia.createSession(existingUser.get('_id'), {});
         const sessionCookie = lucia.createSessionCookie(session.id);
         event.cookies.set(sessionCookie.name, sessionCookie.value, {

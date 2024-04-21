@@ -11,6 +11,8 @@ export const actions: Actions = {
         const formData = await event.request.formData();
         const username = formData.get("username");
         const password = formData.get("password");
+
+        // validates form data
         if (
             typeof username !== "string" ||
             username.length < 3 ||
@@ -26,19 +28,25 @@ export const actions: Actions = {
                 message: "Invalid password"
             });
         }
+
+        // generates hashed password
         const userId = generateId(15);
         const hashedPassword = await new Argon2id().hash(password);
+        // checks if username is in the db
         if (await(User.exists({username: username})) != null ){
             return fail(400, {
                 message: "username is not unique"
             })
         }
+
+        // adds the user to the database
         User.create({
             _id: userId,
             username: username,
             hashed_password: hashedPassword
         });
 
+        //creates session and cookie
         const session = await lucia.createSession(userId, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
         event.cookies.set(sessionCookie.name, sessionCookie.value, {

@@ -18,6 +18,7 @@ export const actions: Actions = {
         if (!event.locals.session) {
             return fail(401);
         }
+        // destroys session and cookie
         await lucia.invalidateSession(event.locals.session.id);
         const sessionCookie = lucia.createBlankSessionCookie();
         event.cookies.set(sessionCookie.name, sessionCookie.value, {
