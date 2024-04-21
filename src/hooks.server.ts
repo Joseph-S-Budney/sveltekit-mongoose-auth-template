@@ -6,6 +6,8 @@ await db().then(() => {
     console.log("connected to database")
 })
 
+//validates and stores the session
+
 export const handle: Handle = async ({ event, resolve }) => {
     const sessionId = event.cookies.get(lucia.sessionCookieName);
     if ( !sessionId ){
