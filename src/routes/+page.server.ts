@@ -6,6 +6,7 @@ import type { Actions, PageServerLoad } from './$types';
 // is signed in
 export const load: PageServerLoad = async ( event ) => {
     if (!event.locals.user)redirect(302, "/signin")
+    //return username
     return {
         username: event.locals.user.username
     }
