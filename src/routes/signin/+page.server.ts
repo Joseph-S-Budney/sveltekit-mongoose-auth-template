@@ -16,7 +16,7 @@ export const actions: Actions = {
             typeof username !== "string" ||
             username.length < 3 ||
             username.length > 31 ||
-            !/^[a-z0-9_-]+$/.test(username)
+            !/^[a-zA-Z0-9_-]+$/.test(username)
         ) { 
             return fail(400, {
                 message: "Invalid username"
