@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ( event ) => {
 
 // signout
 export const actions: Actions = {
-    default: async (event) => {
+    signout: async (event) => {
         if (!event.locals.session) {
             return fail(401);
         }
@@ -29,5 +29,16 @@ export const actions: Actions = {
             ...sessionCookie.attributes
         });
         redirect(302, "/signin");
-    }
+    },
+    form: async (event) => {
+        const form = await superValidate(event, zod(formSchema));
+        if (!form.valid){
+            return fail(400, {
+                form,
+            });
+        }
+        return {
+            form,
+        };
+    },
 }
