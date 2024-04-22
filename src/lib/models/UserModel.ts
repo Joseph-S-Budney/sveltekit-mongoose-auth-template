@@ -8,5 +8,5 @@ mongoose.model(
         username: { type: String, unique: true },
         hashed_password: {type: String, required: true},
     } as const,
-    { _id: false, versionKey: false })
+    { _id: false })
 );

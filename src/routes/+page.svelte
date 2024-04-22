@@ -3,4 +3,4 @@
     export let data: PageData;
 </script>
 
-<h1>Welcome, { data.username }</h1>
+<h1 class="text-3xl">Welcome, { data.username }</h1>

@@ -18,7 +18,7 @@
     const { form: formData, enhance } = form
 </script>
 
-<h1>Sign in</h1>
+<h1 class="text-3xl">Sign in</h1>
 <form method="POST" use:enhance>
     <Form.Field {form} name="username">
         <Form.Control let:attrs>
