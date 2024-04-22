@@ -1,14 +1,17 @@
 import { lucia } from '$lib/utils/auth';
-import { User } from '$lib/models/User';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { superValidate } from 'sveltekit-superforms';
+import { formSchema } from '$lib/utils/schema';
+import { zod } from "sveltekit-superforms/adapters";
 
 // is signed in
 export const load: PageServerLoad = async ( event ) => {
     if (!event.locals.user)redirect(302, "/signin")
     //return username
     return {
-        username: event.locals.user.username
+        username: event.locals.user.username,
+        form: await superValidate(zod(formSchema))
     }
 }
 

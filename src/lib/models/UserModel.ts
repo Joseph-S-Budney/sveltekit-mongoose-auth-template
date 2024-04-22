@@ -9,4 +9,3 @@ export const User = mongoose.model(
     } as const,
     { _id: false })
 );
-
