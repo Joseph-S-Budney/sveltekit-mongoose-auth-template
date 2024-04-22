@@ -1,10 +1,9 @@
 <script lang="ts">
     import "../app.pcss";
-    import { enhance } from "$app/forms";
+    import Header from "./Header.svelte";
 </script>
 
-<form method="POST" use:enhance>
-    <button>Sign Out</button>
-</form>
-
-<slot></slot>
+<div class="container-fluid">
+    <Header />
+    <slot></slot>
+</div>
