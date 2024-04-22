@@ -4,11 +4,14 @@
 </script>
 
 <header>
-<nav class="flex mx-8 justify-start">
-    <Button class="mx-8" href="/signup">Sign Up</Button>
-    <Button class="mx-8" href="/signin">Sign In</Button>
+<nav class="flex items-center space-x-4 lg:space-x-6">
+    <a class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary" href="/">Home</a>
+    <a class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary" href="/signup">Sign Up</a>
+    <a class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary" href="/signin">Sign In</a>
+
     <form method="POST" action="?/signout" use:enhance>
-        <Button class="mx-8" variant="destructive">Sign Out</Button>
+        <Button variant="destructive">Sign Out</Button>
     </form>
 </nav>
 </header>
+

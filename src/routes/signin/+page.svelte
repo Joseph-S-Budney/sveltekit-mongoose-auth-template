@@ -38,4 +38,6 @@
     </Form.Field>
     <Form.Button>Submit</Form.Button>
 </form>
-<a href="/signup">I don't have an account</a>
+<div class="text-center">
+    <a class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary" href="/signup">I don't have an account</a>
+</div>
