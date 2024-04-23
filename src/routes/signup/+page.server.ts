@@ -4,28 +4,21 @@ import { generateId } from "lucia";
 import { Argon2id } from "oslo/password";
 import { User } from "$lib/models/UserModel";
 import { superValidate } from 'sveltekit-superforms';
-import { formSchema } from '$lib/utils/Schema';
+import { userForm } from '$lib/utils/Schema';
 import { zod } from "sveltekit-superforms/adapters";
 
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
     default: async (event) => {
-        const form = await superValidate(event, zod(formSchema));
+        const form = await superValidate(event, zod(userForm));
         if (!form.valid){
             return fail(400, {
                 form,
             });
         }
-        return {
-            form,
-        };
-        /*
-        const formData = await event.request.formData();
-        const username = formData.get("username");
-        const password = formData.get("password");
-
-
+        const username = form.data.username
+        const password = form.data.password
 
         // generates hashed password
         const userId = generateId(15);
@@ -51,7 +44,8 @@ export const actions: Actions = {
             path: ".",
             ...sessionCookie.attributes
         });
-        redirect(302, "/")
-        */
+        return {
+            form,
+        };
     }
 }

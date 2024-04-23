@@ -2,7 +2,7 @@
     import * as Form from "$lib/components/ui/form";
     import { Button } from "$lib/components/ui/button";
     import { Input } from "$lib/components/ui/input";
-    import { formSchema, type FormSchema} from "$lib/utils/Schema"
+    import { userForm, type FormSchema} from "$lib/utils/Schema"
     import {
         type SuperValidated,
         type Infer,
@@ -13,9 +13,8 @@
     export let data: SuperValidated<Infer<FormSchema>>;
 
     const form = superForm(data, {
-        validators: zodClient(formSchema),
+        validators: zodClient(userForm),
     });
-
     const { form: formData, enhance } = form
 </script>
 

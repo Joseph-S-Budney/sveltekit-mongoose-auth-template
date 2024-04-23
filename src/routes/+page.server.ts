@@ -2,7 +2,7 @@ import { lucia } from '$lib/utils/auth';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms';
-import { formSchema } from '$lib/utils/Schema';
+import { userForm } from '$lib/utils/Schema';
 import { zod } from "sveltekit-superforms/adapters";
 
 // is signed in
@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ( event ) => {
     //return username
     return {
         username: event.locals.user.username,
-        form: await superValidate(zod(formSchema))
+        form: await superValidate(zod(userForm))
     }
 }
 

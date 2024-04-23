@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as Form from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
-    import { formSchema, type FormSchema} from "$lib/utils/Schema"
+    import { userForm, type FormSchema} from "$lib/utils/Schema"
     import {
         type SuperValidated,
         type Infer,
@@ -12,7 +12,7 @@
     export let data: SuperValidated<Infer<FormSchema>>;
 
     const form = superForm(data, {
-        validators: zodClient(formSchema),
+        validators: zodClient(userForm),
     });
 
     const { form: formData, enhance } = form
@@ -34,6 +34,14 @@
             <Input {...attrs} type="password" bind:value={$formData.password} />
         </Form.Control>
         <Form.FormDescription>This is you password</Form.FormDescription>
+        <Form.FieldErrors />
+    </Form.Field>
+    <Form.Field {form} name="confirm_password">
+        <Form.Control let:attrs>
+            <Form.Label>Confirm Password</Form.Label>
+            <Input {...attrs} type="password" bind:value={$formData.confirm_password} />
+        </Form.Control>
+        <Form.FormDescription>This is you password confirmation</Form.FormDescription>
         <Form.FieldErrors />
     </Form.Field>
     <Form.Button>Submit</Form.Button>
