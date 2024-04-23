@@ -2,7 +2,7 @@ import { lucia } from '$lib/utils/auth';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms';
-import { formSchema } from '$lib/utils/schema';
+import { formSchema } from '$lib/utils/Schema';
 import { zod } from "sveltekit-superforms/adapters";
 
 // is signed in
@@ -29,16 +29,5 @@ export const actions: Actions = {
             ...sessionCookie.attributes
         });
         redirect(302, "/signin");
-    },
-    form: async (event) => {
-        const form = await superValidate(event, zod(formSchema));
-        if (!form.valid){
-            return fail(400, {
-                form,
-            });
-        }
-        return {
-            form,
-        };
     },
 }

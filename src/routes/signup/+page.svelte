@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as Form from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
-    import { formSchema, type FormSchema} from "$lib/utils/schema"
+    import { formSchema, type FormSchema} from "$lib/utils/Schema"
     import {
         type SuperValidated,
         type Infer,

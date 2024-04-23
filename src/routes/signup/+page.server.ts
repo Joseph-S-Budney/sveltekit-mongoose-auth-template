@@ -3,31 +3,29 @@ import { fail, redirect } from "@sveltejs/kit";
 import { generateId } from "lucia";
 import { Argon2id } from "oslo/password";
 import { User } from "$lib/models/UserModel";
+import { superValidate } from 'sveltekit-superforms';
+import { formSchema } from '$lib/utils/Schema';
+import { zod } from "sveltekit-superforms/adapters";
 
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
     default: async (event) => {
+        const form = await superValidate(event, zod(formSchema));
+        if (!form.valid){
+            return fail(400, {
+                form,
+            });
+        }
+        return {
+            form,
+        };
+        /*
         const formData = await event.request.formData();
         const username = formData.get("username");
         const password = formData.get("password");
 
-        // validates form data
-        if (
-            typeof username !== "string" ||
-            username.length < 3 ||
-            username.length > 31 ||
-            !/^[a-zA-Z0-9_-]+$/.test(username)
-        ) { 
-            return fail(400, {
-                message: "Invalid username"
-            });
-        }
-        if (typeof password !== "string" || password.length < 6 || password.length > 255) {
-            return fail(400, {
-                message: "Invalid password"
-            });
-        }
+
 
         // generates hashed password
         const userId = generateId(15);
@@ -54,5 +52,6 @@ export const actions: Actions = {
             ...sessionCookie.attributes
         });
         redirect(302, "/")
+        */
     }
 }

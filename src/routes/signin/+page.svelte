@@ -1,7 +1,8 @@
 <script lang="ts">
     import * as Form from "$lib/components/ui/form";
+    import { Button } from "$lib/components/ui/button";
     import { Input } from "$lib/components/ui/input";
-    import { formSchema, type FormSchema} from "$lib/utils/schema"
+    import { formSchema, type FormSchema} from "$lib/utils/Schema"
     import {
         type SuperValidated,
         type Infer,
@@ -39,5 +40,5 @@
     <Form.Button>Submit</Form.Button>
 </form>
 <div class="text-center">
-    <a class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary" href="/signup">I don't have an account</a>
+    <Button variant="link" href="/signup">I don't have an account</Button>
 </div>
