@@ -17,6 +17,19 @@ export const load: PageServerLoad = async ( event ) => {
 
 // signout
 export const actions: Actions = {
+    signout: async (event) => {
+        if (!event.locals.session) {
+            return fail(401);
+        }
+        // destroys session and cookie
+        await lucia.invalidateSession(event.locals.session.id);
+        const sessionCookie = lucia.createBlankSessionCookie();
+        event.cookies.set(sessionCookie.name, sessionCookie.value, {
+            path: ".",
+            ...sessionCookie.attributes
+        });
+        redirect(302, "/signin");
+    },
     form: async (event) => {
         const form = await superValidate(event, zod(formSchema));
         if (!form.valid){
