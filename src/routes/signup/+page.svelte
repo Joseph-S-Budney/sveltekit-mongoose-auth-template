@@ -1,5 +1,7 @@
 <script lang="ts">
     import * as Form from "$lib/components/ui/form";
+    import { Button } from "$lib/components/ui/button";
+
     import { Input } from "$lib/components/ui/input";
     import { signupForm, type SignupSchema} from "$lib/utils/Schema"
     import {
@@ -47,3 +49,6 @@
     </Form.Field>
     <Form.Button>Submit</Form.Button>
 </form>
+<div class="text-center">
+    <Button variant="link" href="/signin">I already have an account</Button>
+</div>
