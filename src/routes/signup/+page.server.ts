@@ -1,9 +1,9 @@
 import { lucia } from "$lib/utils/auth";
-import { fail, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import { generateId } from "lucia";
 import { Argon2id } from "oslo/password";
 import { User } from "$lib/models/UserModel";
-import { superValidate } from 'sveltekit-superforms';
+import { superValidate, fail, setError } from 'sveltekit-superforms';
 import { signupForm } from '$lib/utils/Schema';
 import { zod } from "sveltekit-superforms/adapters";
 
@@ -25,9 +25,7 @@ export const actions: Actions = {
         const hashedPassword = await new Argon2id().hash(password);
         // checks if username is in the db
         if (await(User.exists({username: username})) != null ){
-            return fail(400, {
-                message: "username is not unique"
-            })
+            return setError(form, "username", "username is not unique");
         }
 
         // adds the user to the database

@@ -1,10 +1,11 @@
 import { lucia } from "$lib/utils/auth";
-import { fail, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import { Argon2id } from "oslo/password";
 import { User } from "$lib/models/UserModel";
-import { superValidate } from 'sveltekit-superforms';
+import { superValidate, fail, setError } from 'sveltekit-superforms';
 import { signinForm } from '$lib/utils/Schema';
 import { zod } from "sveltekit-superforms/adapters";
+
 
 import type { Actions } from "./$types";
 
@@ -20,20 +21,15 @@ export const actions: Actions = {
         const username = form.data.username
         const password = form.data.password
         
-        console.log('user exists')
         // checks if user is in db
         const existingUser = await User.findOne({username: username});
         if(!existingUser){
-            return fail(400, {
-                message: "Incorrect username or password"
-            });           
+            return setError(form, "username", "username does not exist");           
         }
         // checks hashed password
         const validPassword = await new Argon2id().verify(existingUser.get('hashed_password'), password);
         if (!validPassword){
-            return fail(400, {
-                message: "Incorrect username or password"
-            });
+            return setError(form, "password", "Incorrect password");
         }
 
         //creates session and cookie
