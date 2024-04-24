@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as Form from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
-    import { userForm, type FormSchema} from "$lib/utils/Schema"
+    import { signupForm, type SignupSchema} from "$lib/utils/Schema"
     import {
         type SuperValidated,
         type Infer,
@@ -9,10 +9,11 @@
     } from "sveltekit-superforms";
     import { zodClient } from "sveltekit-superforms/adapters";
 
-    export let data: SuperValidated<Infer<FormSchema>>;
+    export let data: SuperValidated<Infer<SignupSchema>>;
 
     const form = superForm(data, {
-        validators: zodClient(userForm),
+        validators: zodClient(signupForm),
+        dataType: 'json'
     });
 
     const { form: formData, enhance } = form

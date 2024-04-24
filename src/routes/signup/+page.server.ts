@@ -4,14 +4,14 @@ import { generateId } from "lucia";
 import { Argon2id } from "oslo/password";
 import { User } from "$lib/models/UserModel";
 import { superValidate } from 'sveltekit-superforms';
-import { userForm } from '$lib/utils/Schema';
+import { signupForm } from '$lib/utils/Schema';
 import { zod } from "sveltekit-superforms/adapters";
 
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
     default: async (event) => {
-        const form = await superValidate(event, zod(userForm));
+        const form = await superValidate(event, zod(signupForm));
         if (!form.valid){
             return fail(400, {
                 form,
@@ -44,8 +44,6 @@ export const actions: Actions = {
             path: ".",
             ...sessionCookie.attributes
         });
-        return {
-            form,
-        };
+        redirect(302, "/signin")
     }
 }

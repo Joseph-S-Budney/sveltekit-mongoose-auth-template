@@ -1,25 +1,24 @@
 import { lucia } from "$lib/utils/auth";
 import { fail, redirect } from "@sveltejs/kit";
-import { generateId } from "lucia";
 import { Argon2id } from "oslo/password";
 import { User } from "$lib/models/UserModel";
 import { superValidate } from 'sveltekit-superforms';
-import { userForm } from '$lib/utils/Schema';
+import { signinForm } from '$lib/utils/Schema';
 import { zod } from "sveltekit-superforms/adapters";
 
 import type { Actions } from "./$types";
 
 export const actions: Actions = {
     default: async (event) => {
-        const form = await superValidate(event, zod(userForm));
+        const form = await superValidate(event, zod(signinForm));
         if (!form.valid){
             return fail(400, {
                 form,
             });
         }
-        const formData = await event.request.formData();
-        const username = formData.get("username")
-        const password: string | null = formData.get("password")
+
+        const username = form.data.username
+        const password = form.data.password
         
         console.log('user exists')
         // checks if user is in db
@@ -44,8 +43,6 @@ export const actions: Actions = {
             path: ".",
             ...sessionCookie.attributes
         });
-        return {
-            form,
-        };
+        redirect(302, "/")
     }
 }
